@@ -5,7 +5,7 @@ var database = 'shortly';
 
 var connection = mysql.createConnection({
   user: 'root',
-  password: ''
+  password: '',
 });
 
 var db = Promise.promisifyAll(connection, { multiArgs: true });

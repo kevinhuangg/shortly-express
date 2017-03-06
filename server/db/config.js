@@ -23,10 +23,19 @@ module.exports = function(db) {
       timestamp TIMESTAMP\
       );');
   })
+
+  .then(function() {
+    return db.queryAsync('CREATE TABLE IF NOT EXISTS users (\
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+      name VARCHAR(16),\
+      password VARCHAR(8)\
+      );');
+  })
   /************************************************************/
   /*          Add additional schema queries here              */
   /************************************************************/
 
+  
   .error(function(err) {
     console.log(err);
   });
