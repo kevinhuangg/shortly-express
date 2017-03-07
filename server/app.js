@@ -62,15 +62,34 @@ app.post('/signup', function(req, res, next) {
 });
 //when making POST request on login
 app.post('/login', function(req, res, next) {
-  Users.loginAuthentication(req, res, function(bool) {
-    if (bool === true) {
-      res.setHeader('location', '/');
-      res.render(200, '/');
-    } else {
-      res.setHeader('location', '/');
+  Users.usernameExists(req, res, function(boolean) {
+    if (boolean === true) { //username exists
+      Users.passwordAuthentication(req, res, function(bool) {
+        if (bool === true) { //username password correct
+          res.setHeader('location', '/');
+          console.log('log in existing');
+          res.end();
+        } else { //username exists password is wrong
+          // res.setHeader('location', '/');
+          res.redirect(400, '/login');
+        }
+      });
+    } else { //username doesn't exist
       res.redirect(400, '/login');
     }
   });
+  
+
+  // Users.passwordAuthentication(req, res, function(bool) {
+  //   if (bool === true) {
+  //     // res.setHeader('location', '/');
+  //     console.log('logged in');
+  //     res.render(200, '/login');
+  //   } else {
+  //     res.setHeader('location', '/');
+  //     res.status(400).send('/login');
+  //   }
+  // });
 });
 
 app.get('/links', 
