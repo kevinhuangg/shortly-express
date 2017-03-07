@@ -24,13 +24,16 @@ module.exports = function(db) {
       );');
   })
 
-  .then(function() {
+  .then(function() { //TODO: refactor to make passwords safe
     return db.queryAsync('CREATE TABLE IF NOT EXISTS users (\
       id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
-      name VARCHAR(16),\
-      password VARCHAR(8)\
+      username VARCHAR(16),\
+      password VARCHAR(8),\
+      timestamp TIMESTAMP\
       );');
   })
+
+
   /************************************************************/
   /*          Add additional schema queries here              */
   /************************************************************/
