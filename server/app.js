@@ -50,7 +50,7 @@ app.post('/signup', function(req, res, next) {
     
     if (boolean === false) {
       Users.createUsername(req, res, function(result) {
-        console.log(result, 'abc');
+        // console.log(result, 'abc');
       });
       res.redirect(200, '/');
     } else {
@@ -59,6 +59,18 @@ app.post('/signup', function(req, res, next) {
 
   });
 
+});
+//when making POST request on login
+app.post('/login', function(req, res, next) {
+  Users.loginAuthentication(req, res, function(bool) {
+    if (bool === true) {
+      res.setHeader('location', '/');
+      res.render(200, '/');
+    } else {
+      res.setHeader('location', '/');
+      res.redirect(400, '/login');
+    }
+  });
 });
 
 app.get('/links', 

@@ -41,6 +41,24 @@ module.exports = {
         }
       });
     });
+  },
+
+  loginAuthentication: function(req, res, callback) {
+    module.exports.usernameExists(req, res, function(bool) {
+      if (bool === true) { //username exists
+        db.query('select password from users where username = "' + req.body.username + '"', function(err, results, fields) {
+          module.exports.hashPassword(req, res, function(hash) {
+            if (results === hash) {
+              callback(true);
+            } else {
+              callback(false);
+            }
+          });
+        });
+      } else {
+        callback(false);
+      }
+    }); 
   }
 
 };
