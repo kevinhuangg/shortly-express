@@ -27,8 +27,8 @@ module.exports = function(db) {
   .then(function() { //TODO: refactor to make passwords safe
     return db.queryAsync('CREATE TABLE IF NOT EXISTS users (\
       id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
-      username VARCHAR(16),\
-      password VARCHAR(8),\
+      username VARCHAR(16) unique,\
+      password VARCHAR(255),\
       timestamp TIMESTAMP\
       );');
   })

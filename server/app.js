@@ -4,6 +4,7 @@ var util = require('./lib/utility');
 var partials = require('express-partials');
 var bodyParser = require('body-parser');
 
+
 var Users = require('./models/user');
 var Links = require('./models/link');
 var Sessions = require('./models/session');
@@ -30,11 +31,34 @@ app.get('/create',
 function(req, res) {
   res.render('index');
 });
+
 app.get('/login', function(req, res) {
   res.render('login');
 });
+
 app.get('/signup', function(req, res) {
   res.render('signup');
+});
+
+//when making POST request on signup
+app.post('/signup', function(req, res, next) {
+  username = req.body.username;
+  password = req.body.password;
+  
+  Users.usernameExists(req, res, function(boolean) {
+    console.log(boolean);
+    
+    if (boolean === false) {
+      Users.createUsername(req, res, function(result) {
+        console.log(result, 'abc');
+      });
+      res.redirect(200, '/');
+    } else {
+      res.redirect(307, '/signup');
+    }
+
+  });
+
 });
 
 app.get('/links', 
@@ -48,6 +72,8 @@ function(req, res, next) {
     next({ status: 500, error: error });
   });
 });
+
+
 
 app.post('/links', 
 function(req, res, next) {
