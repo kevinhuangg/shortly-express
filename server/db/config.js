@@ -24,7 +24,7 @@ module.exports = function(db) {
       );');
   })
 
-  .then(function() { //TODO: refactor to make passwords safe
+  .then(function() { //creates users table
     return db.queryAsync('CREATE TABLE IF NOT EXISTS users (\
       id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
       username VARCHAR(16) unique,\
@@ -32,6 +32,14 @@ module.exports = function(db) {
       timestamp TIMESTAMP\
       );');
   })
+  .then(function() { //create sessions table
+    return db.queryAsync('CREATE TABLE IF NOT EXISTS sessions (\
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+      hash VARCHAR(255),\
+      user_id INT,\
+      timestamp TIMESTAMP\
+      );');
+  }) //TODO: add foreign key to user_id
 
 
   /************************************************************/

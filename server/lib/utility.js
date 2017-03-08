@@ -17,6 +17,13 @@ exports.isValidUrl = function(url) {
   return url.match(rValidUrl);
 };
 
+
+exports.generateHash = function(key) {
+  var hash = crypto.createHash('sha1');
+  hash.update(key);
+  return hash.digest('hex');
+};
+
 /************************************************************/
 // Add additional utility functions below
 /************************************************************/

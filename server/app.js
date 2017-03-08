@@ -46,11 +46,9 @@ app.post('/signup', function(req, res, next) {
   password = req.body.password;
   
   Users.usernameExists(req, res, function(boolean) {
-    console.log(boolean);
     
     if (boolean === false) {
       Users.createUsername(req, res, function(result) {
-        // console.log(result, 'abc');
       });
       res.redirect(200, '/');
     } else {
@@ -67,10 +65,8 @@ app.post('/login', function(req, res, next) {
       Users.passwordAuthentication(req, res, function(bool) {
         if (bool === true) { //username password correct
           res.setHeader('location', '/');
-          console.log('log in existing');
           res.end();
         } else { //username exists password is wrong
-          // res.setHeader('location', '/');
           res.redirect(400, '/login');
         }
       });
@@ -78,18 +74,6 @@ app.post('/login', function(req, res, next) {
       res.redirect(400, '/login');
     }
   });
-  
-
-  // Users.passwordAuthentication(req, res, function(bool) {
-  //   if (bool === true) {
-  //     // res.setHeader('location', '/');
-  //     console.log('logged in');
-  //     res.render(200, '/login');
-  //   } else {
-  //     res.setHeader('location', '/');
-  //     res.status(400).send('/login');
-  //   }
-  // });
 });
 
 app.get('/links', 

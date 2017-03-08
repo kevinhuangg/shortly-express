@@ -14,7 +14,6 @@ module.exports = {
       if (results.length === 0) { //user does not exist
         callback(false);
       } else { //user does exist
-        // console.log('user does exist', results);
         callback(true);
       }
     });
@@ -44,22 +43,16 @@ module.exports = {
   },
 
   passwordAuthentication: function(req, res, callback) {
-    // module.exports.usernameExists(req, res, function(bool) {
-    //   if (bool === true) { //username exists
+
     db.query('select password from users where username = "' + req.body.username + '"', function(err, results, fields) {
-      console.log(results, 'password');
       module.exports.hashPassword(req, res, function(hash) {
-        console.log(hash, 'hash');
         if (results[0].password === hash) { //usernmae exists password is correct
           callback(true);
         } else { //username exists password is wrong
           callback(false);
         }
       });
-        // });
-      // } else { //username does not exist
-      //   callback(false);
-      // }
+
     }); 
   }
 
